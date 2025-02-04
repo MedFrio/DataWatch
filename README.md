@@ -1,27 +1,27 @@
 # DataWatch
 
 ## Description
-Ce projet implémente un pipeline serverless pour l'analyse automatique de fichiers CSV. Il s'appuie sur Python (Django) pour la gestion du backend et intègre SharePoint et Power Automate pour le traitement des fichiers.
+Ce projet implémente un pipeline serverless pour l'analyse automatique de fichiers CSV. Il s'appuie sur Python (Django) pour la gestion du backend et intègre OneDrive et Power Automate pour le traitement des fichiers.
 
 ## Architecture du Projet
 
 1. **Envoi des fichiers CSV** :
-   - Les fichiers CSV sont envoyés via une API Graph vers SharePoint.
+   - Les fichiers CSV sont envoyés via une API Graph vers OneDrive.
    
 2. **Traitement des fichiers** :
    - Power Automate détecte l'ajout de nouveaux fichiers et les traite selon les règles définies.
    
 3. **Retour du traitement** :
-   - Power Automate génère un retour et met à jour SharePoint avec les résultats du traitement.
+   - Power Automate génère un retour et met à jour OneDrive avec les résultats du traitement.
    
 4. **Analyse des résultats** :
-   - Le backend en Django analyse la bibliothèque SharePoint pour détecter l'arrivée du retour.
+   - Le backend en Django analyse la bibliothèque OneDrive pour détecter l'arrivée du retour.
    - En fonction des résultats, des actions spécifiques sont déclenchées.
 
 ## Technologies utilisées
 
 - **Backend** : Python, Django
-- **Stockage** : SharePoint (via API Graph)
+- **Stockage** : OneDrive (via API Graph)
 - **Automatisation** : Power Automate
 - **Analyse des données** : Django et bibliothèques Python pour la manipulation des CSV
 
@@ -42,8 +42,8 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
    ```sh
    pip install -r requirements.txt
    ```
-4. **Configurer les accès SharePoint et Power Automate** :
-   - Modifier les variables d'environnement ou configurer un fichier `.env` avec les accès API Graph et SharePoint.
+4. **Configurer les accès OneDrive et Power Automate** :
+   - Modifier les variables d'environnement ou configurer un fichier `.env` avec les accès API Graph et OneDrive.
 
 ## Exécution du projet
 
@@ -52,7 +52,7 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
    python manage.py runserver
    ```
 2. **Envoyer un fichier CSV via l'API**
-3. **Vérifier le traitement sur SharePoint**
+3. **Vérifier le traitement sur OneDrive**
 4. **Analyser les retours et logs pour suivre le workflow**
 
 ## Contribution

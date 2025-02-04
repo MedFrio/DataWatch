@@ -1,0 +1,34 @@
+# Environnement virtuel
+venv/
+.env
+*.env
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Base de données SQLite (si utilisée)
+db.sqlite3
+*.sqlite3
+
+# Logs et fichiers temporaires
+*.log
+*.pot
+*.pyc
+*.pyo
+*.swp
+*.swo
+*.swn
+
+# Fichiers Django
+/media/
+/static/
+*.log
+local_settings.py
+
+# Dépendances et IDE
+.idea/
+.vscode/
+*.iml
+.DS_Store
