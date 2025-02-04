@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataWatch - Page d'accueil</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            color: #777;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 18px;
+            margin-top: 20px;
+            display: inline-block;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .section-title {
+            margin-top: 40px;
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 60px;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+        .button-follow {
+            background-color: #008CBA;
+            margin-top: 15px;
+        }
+        .button-follow:hover {
+            background-color: #007bb5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue sur DataWatch</h1>
+        <h2>Analyse Automatique de Fichiers CSV</h2>
+        <p>
+            DataWatch est un projet de pipeline d’analyse de données entièrement serverless, conçu pour analyser automatiquement des fichiers CSV contenant des données cruciales pour la prise de décision dans les entreprises.
+        </p>
+        <p>
+            Le système détecte des anomalies dans les données, génère des rapports détaillés et envoie des notifications de manière automatisée.
+        </p>
+
+        <div class="section-title">Fonctionnalités</div>
+        <p>
+            - Dépôt facile des fichiers CSV via une interface web.<br>
+            - Analyse automatique des fichiers sur un service cloud serverless (AWS, Azure, GCP).<br>
+            - Détection d’anomalies dans les données et génération de rapports.<br>
+            - Visualisation des résultats via une interface web.<br>
+            - Notification des récapitulatifs par email ou push.
+        </p>
+
+        <div class="section-title">Objectifs Pédagogiques</div>
+        <p>
+            - Mettre en œuvre un workflow d’analyse serverless dans un cloud public.<br>
+            - Exploiter des services de stockage cloud pour gérer les fichiers entrants et sortants.<br>
+            - Déployer des fonctions serverless (FaaS) pour traiter les données sans infrastructure.<br>
+            - Automatiser l’ensemble du traitement des fichiers sans intervention humaine.
+        </p>
+
+        <a href="/upload" class="button">Démarrer l'Analyse</a>
+
+        <a href="/suivi_ticket" class="button button-follow">Suivi Ticket</a> <!-- Nouveau bouton -->
+
+        <div class="footer">
+            <p>Projet DataWatch - ESGI 4AL</p>
+            <p><strong>Mohammed FRIOUICHEN</strong></p>
+        </div>
+    </div>
+</body>
+</html>

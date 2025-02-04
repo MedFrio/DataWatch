@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload CSV - DataWatch</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 14px;
+            color: #777;
+            margin-top: 10px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+            font-size: 14px;
+            color: #555;
+        }
+        input[type="file"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #responseMessage {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+        #responseMessage span {
+            font-weight: bold;
+        }
+        .error {
+            color: red;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        /* Création de l'effet de bulle avec animation */
+        .bubbles-container {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            gap: 50px; /* Espacement entre les bulles */
+        }
+        .bubble {
+            width: 120px; /* Agrandir les bulles */
+            height: 120px;
+            background-color: #FF6F61; /* Couleur différente */
+            color: white;
+            font-size: 20px; /* Augmenter la taille du texte */
+            line-height: 120px;
+            border-radius: 50%;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-weight: bold;
+        }
+        .bubble:hover {
+            background-color: #FF5A4E; /* Couleur de survol */
+            transform: translateY(-10px);
+        }
+        .bubble:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DataWatch</h1>
+        <h2>Envoyer un fichier CSV</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="csv_file">Fichier CSV :</label>
+            <input type="file" name="csv_file" id="csv_file" required><br>
+
+            <label for="email">Votre email :</label>
+            <input type="email" name="email" id="email" required><br>
+
+            <button type="submit">Envoyer</button>
+        </form>
+
+        <p id="responseMessage"></p>
+
+        <div class="footer">
+            <p>Projet DataWatch - ESGI 4AL</p>
+            <p><strong>Mohammed FRIOUICHEN</strong></p>
+        </div>
+    </div>
+
+    <!-- Bulles en dehors du formulaire -->
+<!-- Bulles en dehors du formulaire -->
+<div class="bubbles-container">
+    <a class="bubble" href='/'>Accueil</a>
+    <a class="bubble" href='/suivi_ticket'>Suivi Ticket</a>
+</div>
+
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let formData = new FormData(this);
+
+            fetch("", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                const messageElement = document.getElementById("responseMessage");
+                if (data.ticket_id) {
+                    messageElement.innerHTML = 
+                        "Numéro de ticket : <strong>" + data.ticket_id + "</strong>";
+                    messageElement.classList.remove("error");
+                } else {
+                    messageElement.innerHTML = 
+                        "<span class='error'>" + (data.error || "Erreur inconnue") + "</span>";
+                }
+            })
+            .catch(error => {
+                console.error("Erreur :", error);
+                document.getElementById("responseMessage").innerHTML = 
+                    "<span class='error'>Erreur lors de l'envoi du fichier.</span>";
+            });
+        });
+    </script>
+</body>
+</html>

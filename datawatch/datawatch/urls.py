@@ -16,7 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from datawatch import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),path("upload/", views.upload_file, name="upload"),path("", views.accueil, name="accueil"),
 ]
