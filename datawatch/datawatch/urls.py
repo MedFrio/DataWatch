@@ -19,5 +19,5 @@ from django.urls import path
 from datawatch import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),path("upload/", views.upload_file, name="upload"),path("", views.accueil, name="accueil"),path('suivi_ticket/', views.suivi_ticket, name='suivi_ticket'),
+    path('admin/', admin.site.urls),path("upload/", views.upload_file, name="upload"),path("", views.accueil, name="accueil"),path('suivi_ticket/', views.suivi_ticket, name='suivi_ticket'),path('check_ticket/<str:ticket_id>/', views.check_ticket_status, name='check_ticket_status'),
 ]

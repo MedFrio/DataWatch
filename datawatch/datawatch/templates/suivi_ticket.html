@@ -25,7 +25,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
         }
         h1 {
             font-size: 28px;
@@ -63,12 +63,50 @@
             font-size: 16px;
             color: #333;
         }
+        .result-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .result-section h2 {
+            font-size: 20px;
+            color: #4CAF50;
+        }
+        .result-section p {
+            font-size: 16px;
+            color: #333;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
+        /* Style pour le tableau des anomalies */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #e74c3c;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
         .footer {
             margin-top: 40px;
             font-size: 14px;
             color: #555;
         }
-        /* Création de l'effet de bulle avec animation */
+        /* Bulles pour la navigation */
         .bubbles-container {
             position: absolute;
             bottom: 15px;
@@ -79,13 +117,12 @@
             gap: 50px; /* Espacement entre les bulles */
             margin-top: 100px; /* Augmente l'espace entre la page et les bulles */
         }
-
         .bubble {
-            width: 120px; /* Agrandir les bulles */
+            width: 120px;
             height: 120px;
-            background-color: #FF6F61; /* Couleur différente */
+            background-color: #FF6F61;
             color: white;
-            font-size: 20px; /* Augmenter la taille du texte */
+            font-size: 20px;
             line-height: 120px;
             border-radius: 50%;
             text-align: center;
@@ -95,7 +132,7 @@
             font-weight: bold;
         }
         .bubble:hover {
-            background-color: #FF5A4E; /* Couleur de survol */
+            background-color: #FF5A4E;
             transform: translateY(-10px);
         }
         .bubble:active {
@@ -105,34 +142,104 @@
 </head>
 <body>
     <div class="container">
-        <h1>Suivi de Ticket</h1>
+        <h1>Suivi d'un Ticket</h1>
         <label for="ticket_id">Numéro de ticket :</label>
-        <input type="text" id="ticket_id" placeholder="Entrez votre numéro de ticket">
-        <button onclick="searchTicket()">Rechercher</button>
-        <p id="result"></p>
-        <div class="footer">
-            <p>Projet DataWatch - ESGI 4AL</p>
-            <p><strong>Mohammed FRIOUICHEN</strong></p>
+        <input type="text" id="ticket" placeholder="Ex: TICKET-123456" required>
+        <button onclick="checkStatus()">Vérifier</button>
+        <p id="statusMessage"></p>
+
+        <div id="result" class="result-section" style="display:none;">
+            <h2>Résultats de l'analyse :</h2>
+            <div id="analysisResults"></div>
+            <div id="anomaliesResults" class="error" style="display:none;">
+                <h3>Anomalies détectées :</h3>
+                <table style="color: #e74c3c" id="anomaliesTable">
+                    <thead style="color: #e74c3c" >
+                        <tr style="color: #e74c3c">
+                            <th>Produit</th>
+                            <th>Anomalie</th>
+                        </tr>
+                    </thead>
+                    <tbody id="anomaliesList"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 
-        <!-- Bulles en dehors du formulaire -->
-        <div class="bubbles-container">
-            <a class="bubble" href='/'>Accueil</a>
-            <a class="bubble" href='/upload'>Analyse</a>
-        </div>
-    
+    <!-- Bulles pour la navigation -->
+    <div class="bubbles-container">
+        <a class="bubble" href='/'>Accueil</a>
+        <a class="bubble" href='/upload'>Analyse</a>
+    </div>
 
     <script>
-        function searchTicket() {
-            const ticketId = document.getElementById("ticket_id").value.trim();
-            if (ticketId === "") {
-                document.getElementById("result").innerHTML = "<span style='color: red;'>Veuillez entrer un numéro de ticket.</span>";
+        function checkStatus() {
+            let ticketId = document.getElementById("ticket").value;
+            if (!ticketId) {
+                alert("Veuillez entrer un numéro de ticket !");
                 return;
             }
-            
-            // Affichage statique pour l'instant, on mettra l'API plus tard
-            document.getElementById("result").innerHTML = "Statut du ticket <strong>" + ticketId + "</strong> : En cours de traitement";
+    
+            fetch(`/check_ticket/${ticketId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("statusMessage").innerHTML = `<strong>${data.message}</strong>`;
+                    const resultSection = document.getElementById("result");
+                    const analysisResults = document.getElementById("analysisResults");
+                    const anomaliesResults = document.getElementById("anomaliesResults");
+                    const anomaliesList = document.getElementById("anomaliesList");
+                    const bubblesContainer = document.querySelector(".bubbles-container");
+
+
+                    // Affichage des résultats d'analyse
+                    if (data.status === "Terminé") {
+                        const { moyenne, ecart_type, mediane } = data.analysis;
+
+                        // Affichage des moyennes
+                        analysisResults.innerHTML = `
+                            <p><strong>Moyenne des prix :</strong> ${moyenne.prix ? moyenne.prix : 'Non disponible'}</p>
+                            <p><strong>Moyenne des quantités :</strong> ${moyenne.quantité ? moyenne.quantité : 'Non disponible'}</p>
+                            <p><strong>Moyenne des notes :</strong> ${moyenne.note ? moyenne.note : 'Non disponible'}</p>
+                            <p><strong>Écart-type des prix :</strong> ${ecart_type.prix ? ecart_type.prix : 'Non disponible'}</p>
+                            <p><strong>Écart-type des quantités :</strong> ${ecart_type.quantité ? ecart_type.quantité : 'Non disponible'}</p>
+                            <p><strong>Écart-type des notes :</strong> ${ecart_type.note ? ecart_type.note : 'Non disponible'}</p>
+                            <p><strong>Médiane des prix :</strong> ${mediane.prix ? mediane.prix : 'Non disponible'}</p>
+                            <p><strong>Médiane des quantités :</strong> ${mediane.quantité ? mediane.quantité : 'Non disponible'}</p>
+                            <p><strong>Médiane des notes :</strong> ${mediane.note ? mediane.note : 'Non disponible'}</p>
+                        `;
+                    }
+
+                    // Affichage des anomalies (si existantes)
+                    if (data.anomalies && data.anomalies.length > 0) {
+                        anomaliesResults.style.display = "block";
+                        anomaliesList.innerHTML = data.anomalies.map(anomaly => 
+                            `<tr>
+                                <td>${anomaly.produit}</td>
+                                <td>${anomaly.anomalie}</td>
+                            </tr>`
+                        ).join('');
+                    } else {
+                        anomaliesResults.style.display = "none";
+                    }
+
+                    resultSection.style.display = "block";
+                                // Changer le style des bulles en fonction du résultat
+            if (data.status === "Terminé") {
+                // Adjust bubbles container position after results
+                bubblesContainer.style.bottom = "80px";
+                bubblesContainer.style.gap = "800px";
+                bubblesContainer.style.marginTop = "100px";  // Optionally adjust margin-top as well
+            } else {
+                // Reset the position if no results
+                bubblesContainer.style.bottom = "15px";
+                bubblesContainer.style.gap = "50px";
+                bubblesContainer.style.marginTop = "100px";  // Optionally reset margin-top
+            }
+                })
+                .catch(error => {
+                    console.error("Erreur :", error);
+                    document.getElementById("statusMessage").innerHTML = "Erreur de connexion.";
+                });
         }
     </script>
 </body>
