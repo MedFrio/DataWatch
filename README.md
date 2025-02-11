@@ -6,7 +6,7 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
 ## Architecture du Projet
 
 1. **Envoi des fichiers CSV** :
-   - Les fichiers CSV sont envoyés via une API Graph vers OneDrive.
+   - Les fichiers CSV sont envoyés via une API vers OneDrive.
    
 2. **Traitement des fichiers** :
    - Power Automate détecte l'ajout de nouveaux fichiers et les traite selon les règles définies.
@@ -21,7 +21,7 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
 ## Technologies utilisées
 
 - **Backend** : Python, Django
-- **Stockage** : OneDrive (via API Graph)
+- **Stockage** : OneDrive (via API)
 - **Automatisation** : Power Automate
 - **Analyse des données** : Django et bibliothèques Python pour la manipulation des CSV
 
@@ -43,7 +43,7 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
    pip install -r requirements.txt
    ```
 4. **Configurer les accès OneDrive et Power Automate** :
-   - Modifier les variables d'environnement ou configurer un fichier `.env` avec les accès API Graph et OneDrive.
+   - Modifier les variables d'environnement ou configurer un fichier `.env` avec les accès API et OneDrive.
 
 ## Exécution du projet
 
