@@ -149,7 +149,6 @@
         <p id="statusMessage"></p>
 
         <div id="result" class="result-section" style="display:none;">
-            <h2>Résultats de l'analyse :</h2>
             <div id="analysisResults"></div>
             <div id="anomaliesResults" class="error" style="display:none;">
                 <h3>Anomalies détectées :</h3>
@@ -197,6 +196,7 @@
 
                         // Affichage des moyennes
                         analysisResults.innerHTML = `
+                            <h2>Résultats de l'analyse :</h2>
                             <p><strong>Moyenne des prix :</strong> ${moyenne.prix ? moyenne.prix : 'Non disponible'}</p>
                             <p><strong>Moyenne des quantités :</strong> ${moyenne.quantité ? moyenne.quantité : 'Non disponible'}</p>
                             <p><strong>Moyenne des notes :</strong> ${moyenne.note ? moyenne.note : 'Non disponible'}</p>
@@ -234,6 +234,7 @@
                 bubblesContainer.style.bottom = "15px";
                 bubblesContainer.style.gap = "50px";
                 bubblesContainer.style.marginTop = "100px";  // Optionally reset margin-top
+                analysisResults.innerHTML = ``;
             }
                 })
                 .catch(error => {
