@@ -22,3 +22,6 @@ def upload_file(request):
     return render(request, "upload.html")
 def accueil(request):
     return render(request, 'accueil.html')
+
+def suivi_ticket(request):
+    return render(request, 'suivi_ticket.html')

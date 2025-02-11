@@ -96,13 +96,15 @@
         /* Création de l'effet de bulle avec animation */
         .bubbles-container {
             position: absolute;
-            bottom: 40px;
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
             justify-content: center;
             gap: 50px; /* Espacement entre les bulles */
+            margin-top: 100px; /* Augmente l'espace entre la page et les bulles */
         }
+
         .bubble {
             width: 120px; /* Agrandir les bulles */
             height: 120px;
@@ -149,40 +151,97 @@
     </div>
 
     <!-- Bulles en dehors du formulaire -->
-<!-- Bulles en dehors du formulaire -->
-<div class="bubbles-container">
-    <a class="bubble" href='/'>Accueil</a>
-    <a class="bubble" href='/suivi_ticket'>Suivi Ticket</a>
-</div>
+    <div class="bubbles-container">
+        <a class="bubble" href='/'>Accueil</a>
+        <a class="bubble" href='/suivi_ticket'>Suivi Ticket</a>
+    </div>
 
     <script>
-        document.getElementById("uploadForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            let formData = new FormData(this);
+document.getElementById("uploadForm").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    
+    const fileInput = document.getElementById("csv_file");
+    const emailInput = document.getElementById("email");
+    
+    // Vérifier si un fichier a été sélectionné
+    if (fileInput.files.length === 0) {
+        alert("Veuillez sélectionner un fichier CSV.");
+        return;
+    }
 
-            fetch("", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                const messageElement = document.getElementById("responseMessage");
-                if (data.ticket_id) {
-                    messageElement.innerHTML = 
-                        "Numéro de ticket : <strong>" + data.ticket_id + "</strong>";
-                    messageElement.classList.remove("error");
-                } else {
-                    messageElement.innerHTML = 
-                        "<span class='error'>" + (data.error || "Erreur inconnue") + "</span>";
-                }
-            })
-            .catch(error => {
-                console.error("Erreur :", error);
+    // Lire le fichier et le convertir en Base64
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = async function(event) {
+        const base64File = event.target.result.split(',')[1]; // On enlève "data:text/csv;base64," au début
+
+        // Générer un ticket aléatoire
+        const ticket_id = "TICKET-" + Math.floor(Math.random() * 1000000);
+
+        // Afficher le ticket immédiatement
+        document.getElementById("responseMessage").innerHTML = 
+        "Fichier en cours d'envoi... Numéro de ticket : <strong>" + ticket_id + "</strong>";
+
+
+        // Construire le corps de la requête en JSON
+        const requestBody = {
+            ticket: ticket_id,
+            file: base64File,  // Contenu du fichier encodé en Base64
+            email: emailInput.value
+        };
+
+        // Envoi de la requête HTTP
+        fetch("https://prod-01.francecentral.logic.azure.com:443/workflows/d650c9ca4cc6420986b48443cfd4e952/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=uQtQ0arfvbeQhvshHwvqHnpIB_mcNPxRTrgbEaxQIgY", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestBody)
+        })
+        .then(async response => {
+            const text = await response.text(); // Lire la réponse sous forme de texte
+            if (!text) {
+                console.log("Aucune réponse JSON, mais la requête a réussi.");
                 document.getElementById("responseMessage").innerHTML = 
-                    "<span class='error'>Erreur lors de l'envoi du fichier.</span>";
-            });
+                    "Numéro de ticket : <strong>" + ticket_id + "</strong><br><span style='color: green;'>Fichier envoyé avec succès.</span>";
+                return;
+            }
+            return JSON.parse(text); // Convertir en JSON si la réponse n'est pas vide
+        })
+        .then(data => {
+        if (data && typeof data === "object") { // Vérifie que data existe et est un objet
+            console.log("Réponse complète :", data);
+            const messageElement = document.getElementById("responseMessage");
+            if (data.ticket) {
+                messageElement.innerHTML = "Numéro de ticket : <strong>" + data.ticket + "</strong>";
+                messageElement.classList.remove("error");
+            } else {
+                messageElement.innerHTML = "<span class='error'>" + (data.error || "Erreur inconnue") + "</span>";
+                }
+            }
+        })
+
+        .catch(error => {
+            console.error("Erreur :", error);
+            document.getElementById("responseMessage").innerHTML = "<span class='error'>Erreur lors de l'envoi du fichier.</span>";
         });
+    };
+
+    reader.readAsDataURL(file); // Convertit le fichier en Base64
+});
+
+
+
+        // Fonction pour générer un ticket aléatoire
+        function generateRandomTicket() {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let ticket = '';
+            for (let i = 0; i < 8; i++) {
+                ticket += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return ticket;
+        }
     </script>
 </body>
 </html>

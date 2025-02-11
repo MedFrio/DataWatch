@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi Ticket - DataWatch</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: #555;
+        }
+        /* Création de l'effet de bulle avec animation */
+        .bubbles-container {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            gap: 50px; /* Espacement entre les bulles */
+            margin-top: 100px; /* Augmente l'espace entre la page et les bulles */
+        }
+
+        .bubble {
+            width: 120px; /* Agrandir les bulles */
+            height: 120px;
+            background-color: #FF6F61; /* Couleur différente */
+            color: white;
+            font-size: 20px; /* Augmenter la taille du texte */
+            line-height: 120px;
+            border-radius: 50%;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            font-weight: bold;
+        }
+        .bubble:hover {
+            background-color: #FF5A4E; /* Couleur de survol */
+            transform: translateY(-10px);
+        }
+        .bubble:active {
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suivi de Ticket</h1>
+        <label for="ticket_id">Numéro de ticket :</label>
+        <input type="text" id="ticket_id" placeholder="Entrez votre numéro de ticket">
+        <button onclick="searchTicket()">Rechercher</button>
+        <p id="result"></p>
+        <div class="footer">
+            <p>Projet DataWatch - ESGI 4AL</p>
+            <p><strong>Mohammed FRIOUICHEN</strong></p>
+        </div>
+    </div>
+
+        <!-- Bulles en dehors du formulaire -->
+        <div class="bubbles-container">
+            <a class="bubble" href='/'>Accueil</a>
+            <a class="bubble" href='/suivi_ticket'>Suivi Ticket</a>
+        </div>
+    
+
+    <script>
+        function searchTicket() {
+            const ticketId = document.getElementById("ticket_id").value.trim();
+            if (ticketId === "") {
+                document.getElementById("result").innerHTML = "<span style='color: red;'>Veuillez entrer un numéro de ticket.</span>";
+                return;
+            }
+            
+            // Affichage statique pour l'instant, on mettra l'API plus tard
+            document.getElementById("result").innerHTML = "Statut du ticket <strong>" + ticketId + "</strong> : En cours de traitement";
+        }
+    </script>
+</body>
+</html>
