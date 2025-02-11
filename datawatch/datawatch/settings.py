@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'datawatch.urls'
+ROOT_URLCONF = 'datawatch.datawatch.urls'
 
 TEMPLATES = [
     {
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'datawatch.wsgi.application'
+WSGI_APPLICATION = 'datawatch.datawatch.wsgi.application'
 
 
 # Database
