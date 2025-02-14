@@ -42,8 +42,7 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
    ```sh
    pip install -r requirements.txt
    ```
-4. **Configurer les accès OneDrive et Power Automate** :
-   - Modifier les variables d'environnement ou configurer un fichier `.env` avec les accès API et OneDrive.
+4. **Configurer les accès OneDrive et Power Automate**
 
 ## Exécution du projet
 
@@ -54,10 +53,6 @@ Ce projet implémente un pipeline serverless pour l'analyse automatique de fichi
 2. **Envoyer un fichier CSV via l'API**
 3. **Vérifier le traitement sur OneDrive**
 4. **Analyser les retours et logs pour suivre le workflow**
-
-## Contribution
-
-Les contributions sont les bienvenues ! Merci de suivre les bonnes pratiques Git et de créer des pull requests pour toute modification.
 
 ## Licence
 
