@@ -4,13 +4,13 @@
 Ce projet implémente un pipeline serverless pour l'analyse automatique de fichiers CSV. Il s'appuie sur Python (Django) pour la gestion du backend et intègre OneDrive et Power Automate pour le traitement des fichiers.
 
 <p align="center">
-  <img src="[URL1](https://github.com/user-attachments/assets/fa6c359d-bb4b-4f9d-ae2a-54db750fefb8)" width="400">
+  <img src="https://github.com/user-attachments/assets/fa6c359d-bb4b-4f9d-ae2a-54db750fefb8" width="400">
 </p>
 <p align="center">
-  <img src="[URL2](https://github.com/user-attachments/assets/865fcef7-c89d-410b-a7e6-6a90e2197218)" width="400">
+  <img src="https://github.com/user-attachments/assets/865fcef7-c89d-410b-a7e6-6a90e2197218" width="400">
 </p>
 <p align="center">
-  <img src="[URL3](https://github.com/user-attachments/assets/5e94bdf1-e8d3-452a-a23f-c9b241f5d3a5)" width="400">
+  <img src="https://github.com/user-attachments/assets/5e94bdf1-e8d3-452a-a23f-c9b241f5d3a5" width="400">
 </p>
 
 ## Architecture du Projet
